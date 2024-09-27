@@ -1,24 +1,40 @@
-<div class="sm:flex sm:w-3/5 mx-auto p-5 sm:p-0 sm:mt-16 mb-12">
-  <div class="bg-white p-8 rounded-lg shadow-lg sm:w-2/3">
-    <% if cookies[:basket] == "{}" %>
-      <p>There's no bacon in your basket yet!</p>
-    <% else %>
-      <div class="">
-        <% @basket.each do |key, value| %>
-          <div class="mb-4">
-            <h3 class="text-xl font-bold">Hand Cured <%= value["cut"].capitalize %> Bacon</h3>
-            <p>Weight: <%= value["weight"] %></p>
-            <p>Cut: <%= value["cut"] %></p>
-            <p>Cure: <%= value["cure"] %></p>
-            <p>Smoke: <%= value["smoke"] %></p>
-            <p>Sliced: <%= value["sliced"] %></p>
+<div class="sm:w-2/5 mx-auto p-5 sm:p-0 sm:mt-16 mb-12">
+  <h1 class="text-2xl text-white font-bold mb-4">Your Basket</h1>
+  <% if cookies[:basket] == "{}" %>
+    <p>There's no bacon in your basket yet!</p>
+  <% else %>
+    <ul class="">
+      <% @basket.each do |key, value| %>
+        <li class="mb-6">
+          <div class="flex justify-between bg-white rounded-lg shadow-lg mb-2 py-2 px-4">
+            <h3 class="sm:text-xl font-bold"><span class="mr-5"><%= value["weight"] %></span> Hand-Cured <%= value["cut"].capitalize %> Bacon</h3>
+            <p class="sm:text-xl font-bold"><%= number_to_currency(value["price"]/100, unit: "£") %></p>
           </div>
-        <% end %>
-      </div>
-
-      <%= form_with url: checkouts_path, method: :post do |form| %>
-        <%= form.submit "Proceed to Checkout", class: "mt-4 bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded" %>
+          <ul class="flex text-yellow-500 text-sm pl-2">
+            <li class="mr-8">🥓 <%= value["cure"].capitalize %> Cure</li>
+            <li class="mr-8">🔥 <%= value["smoke"].capitalize %> <%= value["smoke"] == "unsmoked" ? '' : "Smoked" %></li>
+            <li>🔪 <%= value["sliced"] %></li>
+          </ul>
+        </li>
       <% end %>
-    <% end %>
-  </div>
+
+      <li class="w-full text-xl mt-12">
+        <div class="flex justify-between text-white rounded-lg shadow-lg mb-2 py-2 px-4">
+          <p class="ml-auto text-right">Total: <%= number_to_currency(12345/100, unit: "£") %></p>
+        </div>
+          <%#= button_to 'Remove', remove_from_basket_path(key), method: :delete, class: "bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded" %>
+      </li>
+    </ul>
+
+    <div class="mt-24">
+      <div class="flex items-center justify-between">
+        <p class="text-white">&larr; <%= link_to "Add more bacon!", products_path %></p>
+        <div>
+          <%= form_with url: checkouts_path, method: :post do |form| %>
+            <%= form.submit "Proceed to Checkout", class: "bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded", data: {turbo: false}%>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  <% end %>
 </div>

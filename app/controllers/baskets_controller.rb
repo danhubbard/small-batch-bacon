@@ -11,7 +11,8 @@ class BasketsController < ApplicationController
       cut: params[:cut],
       cure: params[:cure],
       smoke: params[:smoke],
-      sliced: params[:sliced]
+      sliced: params[:sliced],
+      price: params[:price].to_i
     }
 
     # Generate a unique key for the new item

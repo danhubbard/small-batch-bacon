@@ -14,7 +14,7 @@ class Checkout < ApplicationRecord
             description: description(item),
             images: [image]
           },
-          unit_amount: calculate_price(item['weight']),
+          unit_amount: item['price'],
         },
         quantity: 1,
       }
