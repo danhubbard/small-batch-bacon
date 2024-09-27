@@ -1,0 +1,24 @@
+<div class="sm:flex sm:w-3/5 mx-auto p-5 sm:p-0 sm:mt-16 mb-12">
+  <div class="bg-white p-8 rounded-lg shadow-lg sm:w-2/3">
+    <% if cookies[:basket] == "{}" %>
+      <p>There's no bacon in your basket yet!</p>
+    <% else %>
+      <div class="">
+        <% @basket.each do |key, value| %>
+          <div class="mb-4">
+            <h3 class="text-xl font-bold">Hand Cured <%= value["cut"].capitalize %> Bacon</h3>
+            <p>Weight: <%= value["weight"] %></p>
+            <p>Cut: <%= value["cut"] %></p>
+            <p>Cure: <%= value["cure"] %></p>
+            <p>Smoke: <%= value["smoke"] %></p>
+            <p>Sliced: <%= value["sliced"] %></p>
+          </div>
+        <% end %>
+      </div>
+
+      <%= form_with url: checkouts_path, method: :post do |form| %>
+        <%= form.submit "Proceed to Checkout", class: "mt-4 bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded" %>
+      <% end %>
+    <% end %>
+  </div>
+</div>
