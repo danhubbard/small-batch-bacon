@@ -25,4 +25,22 @@ class BasketsController < ApplicationController
 
     redirect_to products_path, notice: 'Item added to basket successfully!'
   end
+
+  def destroy
+    basket = JSON.parse(cookies[:basket] ||= "{}")
+    item_key = params[:id]
+    
+    if basket.key?(item_key)
+      basket.delete(item_key)
+      cookies[:basket] = JSON.generate(basket)
+      
+      @basket = basket
+      render turbo_stream: [
+        turbo_stream.remove("basket_item_#{item_key}"),
+        turbo_stream.replace("basket_total", partial: "baskets/total", locals: { basket: @basket })
+      ]
+    else
+      head :not_found
+    end
+  end
 end

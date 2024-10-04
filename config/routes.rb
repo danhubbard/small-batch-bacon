@@ -11,7 +11,7 @@ Rails.application.routes.draw do
 
   resources :pages, only: :show
   resources :products, only: [:index]
-  resource :basket
+  resource :basket, only: [:show, :create, :destroy]
   resources :checkouts, only: [:create]
 
   # Defines the root path route ("/")
