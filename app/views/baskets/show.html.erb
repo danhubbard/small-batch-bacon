@@ -1,3 +1,5 @@
+<%= @basket.inspect %>
+
 <div class="sm:w-2/5 mx-auto p-5 sm:mt-16 mb-12 bg-white rounded-lg shadow-lg">
   <h1 class="text-2xl font-bold mb-4">
     <i class="fas fa-shopping-basket mr-2"></i>Your Basket
@@ -5,17 +7,20 @@
   <% if cookies[:basket] == "{}" %>
     <p>There's no bacon in your basket yet!</p>
   <% else %>
-    <ul class="">
+    <ul>
       <% @basket.each do |key, value| %>
         <li id="basket_item_<%= key %>" class="mb-6 pb-8 border-b">
           <div class="flex justify-between bg-white mb-1 py-2 px-4">
-            <h3 class="sm:text-xl font-bold"><span class="mr-5"><%= value["weight"] %></span> <%= value["cut"].capitalize %> Bacon</h3>
-            <p class="sm:text-xl font-bold"><%= number_to_currency(value["price"]/100, unit: "£") %></p>
+            <h3 class="sm:text-xl font-bold">
+              <span class="mr-5"><%= format_weight(value["weight"].to_i) %></span>
+              <%= value["product_name"] %>
+            </h3>
+            <p class="sm:text-xl font-bold"><%= number_to_currency(value["price"]/100.0, unit: "£") %></p>
             <%= button_to 'Remove', basket_path(id: key), method: :delete, class: "bg-red-500 hover:bg-red-600 text-white text-sm py-1 px-2 rounded", data: { turbo_confirm: "Are you sure you want to remove this item?" } %>
           </div>
           <ul class="flex text-yellow-600 font-bold text-sm px-4">
             <li class="mr-3 bg-neutral-100 rounded-full px-3 py-1">🥓 <%= value["cure"].capitalize %> Cure</li>
-            <li class="mr-3 bg-neutral-100 rounded-full px-3 py-1">🔥 <%= value["smoke"].capitalize %> <%= value["smoke"] == "unsmoked" ? '' : "Smoked" %></li>
+            <li class="mr-3 bg-neutral-100 rounded-full px-3 py-1">🔥 <%= value["smoke"].capitalize %></li>
             <li class="bg-neutral-100 rounded-full px-3 py-1">🔪 <%= value["sliced"] %></li>
           </ul>
         </li>

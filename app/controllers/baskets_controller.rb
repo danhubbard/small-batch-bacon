@@ -7,8 +7,8 @@ class BasketsController < ApplicationController
     basket = cookies[:basket] ? JSON.parse(cookies[:basket]) : {}
     
     new_item = {
+      product_name: params[:name],
       weight: params[:weight],
-      cut: params[:cut],
       cure: params[:cure],
       smoke: params[:smoke],
       sliced: params[:sliced],
@@ -23,7 +23,7 @@ class BasketsController < ApplicationController
 
     Rails.logger.info("Basket: #{cookies[:basket]}")
 
-    redirect_to products_path, notice: 'Item added to basket successfully!'
+    redirect_to basket_path, notice: 'Item added to basket successfully!'
   end
 
   def destroy

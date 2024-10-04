@@ -4,31 +4,23 @@ export default class extends Controller {
   static targets = ["priceDisplay", "weightRadio", "priceField"]
 
   connect() {
+    // Parse the price tiers JSON
+    this.priceTiers = JSON.parse(this.element.dataset.productPriceTiers)
     this.updatePrice()
   }
 
   updatePrice() {
     const selectedWeight = this.weightRadioTargets.find(radio => radio.checked)
     if (selectedWeight) {
-      const weight = selectedWeight.value
+      const weight = parseFloat(selectedWeight.value)
       const price = this.calculatePrice(weight)
-      this.priceDisplayTarget.innerText = `£${(price / 100).toFixed(2)}`
-      this.priceFieldTarget.value = price
+      this.priceDisplayTarget.innerText = `£${price.toFixed(2)}`
+      this.priceFieldTarget.value = Math.round(price * 100) // Store in cents
     }
   }
 
   calculatePrice(weight) {
-    switch (weight) {
-      case '250g':
-        return 600
-      case '500g':
-        return 1200
-      case '1kg':
-        return 2000
-      case '2kg':
-        return 4000
-      default:
-        return 0
-    }
+    const priceTier = this.priceTiers.find(tier => parseFloat(tier.weight) === weight)
+    return priceTier ? parseFloat(priceTier.price) : 0
   }
 }

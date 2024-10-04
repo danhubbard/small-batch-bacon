@@ -10,7 +10,7 @@ Rails.application.routes.draw do
   get "manifest" => "rails/pwa#manifest", as: :pwa_manifest
 
   resources :pages, only: :show
-  resources :products, only: [:index]
+  resources :products, only: [:index, :show]
   resource :basket, only: [:show, :create, :destroy]
   resources :checkouts, only: [:create]
 

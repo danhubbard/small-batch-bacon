@@ -10,7 +10,7 @@ class Checkout < ApplicationRecord
         price_data: {
           currency: 'gbp',
           product_data: {
-            name: "Hand Cured #{item['cut'].capitalize} Bacon",
+            name: item['product_name'],
             description: description(item),
             images: [image]
           },
@@ -43,21 +43,6 @@ class Checkout < ApplicationRecord
   private
 
   def self.description(item)
-    "Options: #{item['weight']}, #{item['smoke'].capitalize}, #{item['sliced']}"
-  end
-
-  def self.calculate_price(weight)
-    case weight
-    when '250g'
-      600
-    when '500g'
-      1200
-    when '1kg'
-      2000
-    when '2kg'
-      4000
-    else
-      0
-    end
+    "#{item['cure'].capitalize} cure, #{item['smoke'].capitalize}, #{item['sliced']}"
   end
 end
