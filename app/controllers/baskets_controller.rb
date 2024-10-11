@@ -1,4 +1,6 @@
 class BasketsController < ApplicationController
+  before_action :set_basket, only: [:show, :destroy]
+
   def show 
     @basket = JSON.parse(cookies[:basket] ||= "{}")
   end
@@ -35,12 +37,35 @@ class BasketsController < ApplicationController
       cookies[:basket] = JSON.generate(basket)
       
       @basket = basket
-      render turbo_stream: [
-        turbo_stream.remove("basket_item_#{item_key}"),
-        turbo_stream.replace("basket_total", partial: "baskets/total", locals: { basket: @basket })
-      ]
+      @basket_total = calculate_basket_total(@basket)
+      
+      if @basket.empty?
+        render turbo_stream: [
+          turbo_stream.remove("basket_item_#{item_key}"),
+          turbo_stream.replace("basket_content", partial: "baskets/empty_basket"),
+          turbo_stream.replace("basket_total", partial: "baskets/total", locals: { basket: @basket, basket_total: @basket_total }),
+          turbo_stream.remove("basket_actions")
+        ]
+      else
+        render turbo_stream: [
+          turbo_stream.remove("basket_item_#{item_key}"),
+          turbo_stream.replace("basket_total", partial: "baskets/total", locals: { basket: @basket, basket_total: @basket_total }),
+          turbo_stream.replace("basket_actions", partial: "baskets/actions", locals: { basket_total: @basket_total })
+        ]
+      end
     else
       head :not_found
     end
+  end
+
+  private
+
+  def set_basket
+    @basket = JSON.parse(cookies[:basket] ||= "{}")
+    @basket_total = calculate_basket_total(@basket)
+  end
+
+  def calculate_basket_total(basket)
+    basket.values.sum { |item| item["price"] } / 100.0
   end
 end

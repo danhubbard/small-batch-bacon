@@ -1,3 +1,3 @@
-<div class="flex justify-between font-bold mb-2 py-2 px-4">
-  <p class="ml-auto text-right">Total: <%= number_to_currency(basket.values.sum { |item| item["price"] } / 100.0, unit: "£") %></p>
+<div id="basket_total" class="flex justify-between font-bold mb-2 py-2 px-4">
+  <p class="ml-auto text-right text-gray-700 text-xl">Total: <%= number_to_currency(basket_total, unit: "£") %></p>
 </div>

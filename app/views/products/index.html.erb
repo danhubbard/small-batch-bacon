@@ -1,10 +1,19 @@
-<div class="sm:flex sm:w-3/5 mx-auto p-5 sm:p-0 sm:mt-16 mb-12">
+<%= render "application/nav" %>
 
-  <div class="bg-white p-8 rounded-lg shadow-lg sm:w-2/3" data-controller="product">
-    <ul>
+<div class="sm:flex sm:w-1/2 mx-auto p-5 sm:p-0 sm:mt-16 mb-12">
+
+  <div class="w-full bg-white p-8 rounded-lg shadow-lg" data-controller="product">
+    <ul class="sm:grid sm:grid-cols-2 sm:gap-4">
       <% @products.each do |product| %>
-        <li>
-          <%= link_to product.name, product_path(product) %>
+        <li class="p-4 rounded relative">
+          <%= link_to product_path(product) do %>
+            <div class="relative">
+              <%= image_tag product.image, class: "w-full h-auto hover:opacity-70 rounded-md" %>
+              <div class="absolute bottom-0 left-0 right-0 bg-slate-900 p-2 rounded-b-md">
+                <h3 class="font-bold text-xl text-yellow-50 font-['Noto_Sans_SC'] hover:underline"><%= product.name %></h3>
+              </div>
+            </div>
+          <% end %>
         </li>
       <% end %>
     </ul>

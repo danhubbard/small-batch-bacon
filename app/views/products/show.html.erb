@@ -1,8 +1,18 @@
-<div class="sm:flex sm:w-3/5 mx-auto p-5 sm:p-0 sm:mt-16 mb-12">
-  <div class="bg-white p-8 rounded-lg shadow-lg sm:w-2/3" 
+<%= render "application/nav" %>
+
+<div class="sm:w-3/5 mx-auto px-5 pt-5 sm:p-0 sm:mt-16">
+  <h2 class="text-2xl text-yellow-50 font-bold mb-2">Hand Cured <%= @product.name %></h2>
+  <p class="text-yellow-50 mb-4">Pre-order for Christmas 2024</p>
+</div>
+
+<div class="sm:flex sm:w-3/5 mx-auto p-5 sm:p-0 mb-12">
+  <div class="bg-white p-4 sm:p-8 rounded-lg shadow-lg sm:w-2/3" 
      data-controller="product" 
      data-product-price-tiers="<%= @product.price_tiers.to_json %>">
-    <h2 class="text-2xl font-bold mb-4">Christmas Bacon Pre-order</h2>
+
+    <div class="bg-yellow-50 p-4 rounded-lg mb-4">
+      <p class="text-gray-700">Please ensure you're in our <%= link_to 'delivery area', '#delivery', class: 'underline' %> or have <%= mail_to 'hello@smallbatchbacon.co.uk', 'arranged collection', class: 'underline' %> before placing an order.</p>
+    </div>
     
     <%= form_with(url: basket_path, method: :post, local: true) do |form| %>
       <%= form.hidden_field :price, data: { product_target: "priceField" } %>
@@ -10,7 +20,6 @@
       
       <div class="mb-6">
         <%= form.label :weight, "Weight", class: "block text-gray-700 font-bold mb-2" %>
-        <p class="text-sm text-gray-600 mb-2">A typical pack of supermarket bacon is 250g</p>
         <div class="flex flex-wrap gap-2">
           <% @product.price_tiers.order(:weight).each do |price_tier| %>
             <label class="inline-flex items-center">
@@ -74,11 +83,11 @@
     <% end %>
     
   </div>
-  <div class="sm:w-1/3 sm:ml-4">
+  <div id="delivery" class="sm:w-1/3 sm:ml-4">
     <div class="text-yellow-50 p-4 rounded-lg shadow-lg h-full">
       <h2 class="text-xl font-bold mb-4"><i class="fas fa-truck mr-2" style="color: #fefce8;"></i>Delivery Details</h2>
       <p class="text-sm  mb-3">Minimum order value £20</p>
-      <p class="text-sm mb-3">All orders are hand delivered free the week of 9th or 16th December to our local area:</p>
+      <p class="text-sm mb-3">All orders are hand delivered free the week of 16th December to our local area:</p>
       <ul class="list-disc list-inside text-sm mb-3">
         <li>Locks Heath</li>
         <li>Warsash</li>
@@ -89,7 +98,7 @@
         <li>Stubbington</li>
       </ul>
       <p class="text-sm mb-3">We can also arrange collection from Warsash or Southsea.</p>
-      <p class="text-sm mb-3">If you live outside these areas, or want to collect,please email to discuss options before placing an order <a href="mailto:hello@smallbatchbacon.com" class="text-blue-300 hover:text-blue-400">hello@smallbatchbacon.com</a></p>
+      <p class="text-sm mb-3">If you live outside these areas, or want to collect,please email to discuss options before placing an order <a href="mailto:hello@smallbatchbacon.co.uk" class="text-blue-300 hover:text-blue-400">hello@smallbatchbacon.co.uk</a></p>
     </div>
   </div>
 </div>

@@ -1,47 +1,49 @@
-<h1 class="sm:w-1/2 mx-auto text-white text-2xl font-bold mt-12">
-  <i class="fas fa-shopping-basket mr-2"></i>Your Basket
-</h1>
-<div class="sm:w-1/2 mx-auto p-5 sm:mt-4 mb-12 bg-white rounded-lg shadow-lg">
-  <% if cookies[:basket] == "{}" %>
-    <p>There's no bacon in your basket yet!</p>
-  <% else %>
-    <ul>
-      <% @basket.each do |key, value| %>
-        <li id="basket_item_<%= key %>" class="mb-6 pb-4 border-b">
-          <div class="flex justify-between items-start bg-white mb-1 py-2 px-4">
-            <div class="flex-grow">
-              <h3 class="sm:text-xl font-bold">
-                <span class="mr-5"><%= format_weight(value["weight"].to_i) %></span>
-                <%= value["product_name"] %>
-              </h3>
-              <ul class="flex text-yellow-600 font-bold text-xs mt-2">
-                <li class="mr-3 bg-neutral-100 rounded-full px-3 py-1">🥓 <%= value["cure"].capitalize %> Cure</li>
-                <li class="mr-3 bg-neutral-100 rounded-full px-3 py-1">🔥 <%= value["smoke"].capitalize %></li>
-                <li class="bg-neutral-100 rounded-full px-3 py-1">🔪 <%= value["sliced"] %></li>
-              </ul>
-            </div>
-            <div class="flex items-center space-x-4">
-              <p class="sm:text-xl font-bold"><%= number_to_currency(value["price"]/100.0, unit: "£") %></p>
-              <%= button_to 'Remove', basket_path(id: key), method: :delete, class: "bg-red-500 hover:bg-red-600 text-white text-sm py-1 px-2 rounded", data: { turbo_confirm: "Are you sure you want to remove this item?" } %>
-            </div>
-          </div>
-        </li>
-      <% end %>
+<%= render "application/nav" %>
 
-      <li id="basket_total" class="w-full text-xl mt-12">
-        <%= render partial: "baskets/total", locals: { basket: @basket } %>
-      </li>
-    </ul>
-  <% end %>
-</div>
-
-<div class="mt-12 sm:w-1/2 mx-auto">
-  <div class="flex items-center justify-between">
-    <p class="text-white">&larr; <%= link_to "🥓 Wait, I want more bacon!", products_path %></p>
-    <div>
-      <%= form_with url: checkouts_path, method: :post do |form| %>
-        <%= form.submit "Proceed to Checkout", class: "bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded", data: {turbo: false}%>
+<div class="mx-auto sm:mt-12 p-4">
+  <%= image_tag "neon.jpg", class: "w-full sm:w-2/5 mx-auto" %>
+  <div class="sm:w-2/5 mx-auto p-5 mb-5 bg-white rounded-b-lg shadow-lg">
+    <div id="basket_content">
+      <% if @basket.empty? %>
+        <%= render "baskets/empty_basket" %>
+      <% else %>
+        <ul>
+          <% @basket.each do |key, value| %>
+            <li id="basket_item_<%= key %>" class="mb-6 pb-4 border-b">
+              <div class="flex justify-between items-start bg-white mb-1 py-2 px-4">
+                <div class="flex-grow">
+                  <h3 class="sm:text-xl font-bold mb-4">
+                    <span class="mr-1"><%= format_weight(value["weight"].to_i) %></span>
+                    <%= value["product_name"] %>
+                  </h3>
+                  <ul class="flex flex-wrap sm:flex-row text-yellow-600 font-bold text-xs mt-2">
+                    <li class="inline-block mr-2 mb-4 sm:mb-0">
+                      <span class="bg-neutral-100 rounded-full px-2 py-1 whitespace-nowrap">🥓 <%= value["cure"].capitalize %> Cure</span>
+                    </li>
+                    <li class="inline-block mr-2 mb-4 sm:mb-0">
+                      <span class="bg-neutral-100 rounded-full px-2 py-1 whitespace-nowrap">🔥 <%= value["smoke"].capitalize %></span>
+                    </li>
+                    <li class="inline-block">
+                      <span class="bg-neutral-100 rounded-full px-2 py-1 whitespace-nowrap">🔪 <%= value["sliced"] %></span>
+                    </li>
+                  </ul>
+                </div>
+                <div class="flex items-center">
+                  <p class="sm:text-xl font-bold"><%= number_to_currency(value["price"]/100.0, unit: "£") %></p>
+                </div>
+              </div>
+              <div class="flex justify-end px-4">
+                <%= button_to 'Remove', basket_path(id: key), method: :delete, class: "bg-red-500 hover:bg-red-600 text-white text-sm py-1 px-2 rounded", data: { turbo_confirm: "Are you sure you want to remove this item?" } %>
+              </div>
+            </li>
+          <% end %>
+        </ul>
       <% end %>
+      <%= render partial: "baskets/total", locals: { basket: @basket, basket_total: @basket_total } %>
     </div>
   </div>
+
+  <% unless @basket.empty? %>
+    <%= render partial: "baskets/actions", locals: { basket_total: @basket_total } %>
+  <% end %>
 </div>

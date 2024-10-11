@@ -3,8 +3,6 @@ class Checkout < ApplicationRecord
     #image = Rails.application.routes.url_helpers.root_url + ActionController::Base.helpers.image_url("bacon-eggs.jpg")
     image = 'https://www.tamingtwins.com/wp-content/uploads/2024/06/air-fryer-bacon-8.jpg'
 
-    Rails.logger.info("Image URL: #{image}")
-
     line_items = basket.map do |key, item|
       {
         price_data: {
@@ -20,8 +18,6 @@ class Checkout < ApplicationRecord
       }
     end
 
-    Rails.logger.info("Line items: #{line_items}")
-
     Stripe::Checkout::Session.create(
       {
       payment_method_types: ['card'],
@@ -35,9 +31,6 @@ class Checkout < ApplicationRecord
       cancel_url: Rails.application.routes.url_helpers.basket_url },
       { api_key: ENV['STRIPE_SECRET_KEY']}
     )
-  rescue => e
-    Rails.logger.error("Error creating Stripe session: #{e.message}")
-    nil
   end
 
   private
