@@ -1,15 +1,16 @@
 <%= render "application/nav" %>
 
-<div class="sm:flex sm:w-1/2 mx-auto p-5 sm:p-0 sm:mt-16 mb-12">
+<div class="sm:flex max-w-screen-xl mx-auto p-5 sm:p-0 sm:mt-16 mb-12">
 
-  <div class="w-full bg-white p-8 rounded-lg shadow-lg" data-controller="product">
-    <ul class="sm:grid sm:grid-cols-2 sm:gap-4">
+  <div class="w-full px-5" data-controller="product">
+    <%= image_tag "neon-2.png", class: "w-full h-auto mb-24" %>
+    <ul class="sm:grid sm:grid-cols-4 sm:gap-10">
       <% @products.each do |product| %>
-        <li class="p-4 rounded relative">
+        <li class="relative">
           <%= link_to product_path(product) do %>
             <div class="relative">
-              <%= image_tag product.image, class: "w-full h-auto hover:opacity-70 rounded-md" %>
-              <div class="absolute bottom-0 left-0 right-0 bg-slate-900 p-2 rounded-b-md">
+              <%= image_tag product.image, class: "w-full h-auto hover:opacity-70" %>
+              <div class="absolute bottom-0 left-0 right-0 bg-slate-900 p-2">
                 <h3 class="font-bold text-xl text-yellow-50 font-['Noto_Sans_SC'] hover:underline"><%= product.name %></h3>
               </div>
             </div>
