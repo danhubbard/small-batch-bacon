@@ -8,6 +8,11 @@
 #     MovieGenre.find_or_create_by!(name: genre_name)
 #   end
 
+# Clear existing data
+puts "Clearing existing data..."
+Product.destroy_all
+PriceTier.destroy_all
+
 # Create Products
 puts "Creating products..."
 back_bacon = Product.create!(
