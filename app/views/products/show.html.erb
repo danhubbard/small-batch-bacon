@@ -23,7 +23,7 @@
         <div class="flex flex-wrap gap-2">
           <% @product.price_tiers.order(:weight).each do |price_tier| %>
             <label class="inline-flex items-center">
-              <%= form.radio_button :weight, price_tier.weight, class: "hidden peer", data: { action: "change->product#updatePrice", product_target: "weightRadio" } %>
+              <%= form.radio_button :weight, price_tier.weight, class: "hidden peer", required: true, data: { action: "change->product#updatePrice change->product#checkFormValidity", product_target: "weightRadio" } %>
               <span class="px-4 py-2 rounded-lg bg-gray-200 hover:bg-gray-300 cursor-pointer select-none peer-checked:bg-slate-900 peer-checked:text-white transition-colors">
                 <%= format_weight(price_tier.weight) %>
               </span>
@@ -37,7 +37,7 @@
         <div class="flex flex-wrap gap-2">
           <% [["jerk", "Jerk"], ["sweet", "Sweet"], ["classic", "Classic Bacon"]].each do |value, label| %>
             <label class="inline-flex items-center">
-              <%= form.radio_button :cure, value, class: "hidden peer" %>
+              <%= form.radio_button :cure, value, class: "hidden peer", required: true, data: { action: "change->product#checkFormValidity" } %>
               <span class="px-4 py-2 rounded-lg bg-gray-200 hover:bg-gray-300 cursor-pointer select-none peer-checked:bg-slate-900 peer-checked:text-white transition-colors">
                 <%= label %>
               </span>
@@ -51,7 +51,7 @@
         <div class="flex flex-wrap gap-2">
           <% [["smoked", "Smoked"], ["unsmoked", "Unsmoked"]].each do |value, label| %>
             <label class="inline-flex items-center">
-              <%= form.radio_button :smoke, value, class: "hidden peer" %>
+              <%= form.radio_button :smoke, value, class: "hidden peer", required: true, data: { action: "change->product#checkFormValidity" } %>
               <span class="px-4 py-2 rounded-lg bg-gray-200 hover:bg-gray-300 cursor-pointer select-none peer-checked:bg-slate-900 peer-checked:text-white transition-colors">
                 <%= label %>
               </span>
@@ -66,7 +66,7 @@
         <div class="flex space-x-2">
           <% [["Sliced", "Sliced"], ["Whole Slab", "Whole Slab"]].each do |value, label| %>
             <label class="inline-flex items-center">
-              <%= form.radio_button :sliced, value, class: "hidden peer" %>
+              <%= form.radio_button :sliced, value, class: "hidden peer", required: true, data: { action: "change->product#checkFormValidity" } %>
               <span class="px-4 py-2 rounded-lg bg-gray-200 hover:bg-gray-300 cursor-pointer select-none peer-checked:bg-slate-900 peer-checked:text-white transition-colors">
                 <%= label %>
               </span>
@@ -78,7 +78,7 @@
       <h1 data-product-target="priceDisplay" class="text-2xl font-bold mt-12 mb-4 font-['Noto_Sans_SC']"></h1>
 
       <div class="mb-4 text-left">
-        <%= form.submit "Add to basket", class: "w-full bg-blue-500 hover:bg-blue-600 text-yellow-50 font-bold py-2 px-4 rounded" %>
+        <%= form.submit "Add to basket", class: "w-full bg-blue-500 hover:bg-blue-600 text-yellow-50 font-bold py-2 px-4 rounded disabled:opacity-50 disabled:cursor-not-allowed", data: { product_target: "submitButton" }, disabled: true %>
       </div>
     <% end %>
     

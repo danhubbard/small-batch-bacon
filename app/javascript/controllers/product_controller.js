@@ -1,12 +1,13 @@
 import { Controller } from "@hotwired/stimulus"
 
 export default class extends Controller {
-  static targets = ["priceDisplay", "weightRadio", "priceField"]
+  static targets = ["priceDisplay", "weightRadio", "priceField", "submitButton"]
 
   connect() {
     // Parse the price tiers JSON
     this.priceTiers = JSON.parse(this.element.dataset.productPriceTiers)
     this.updatePrice()
+    this.checkFormValidity()
   }
 
   updatePrice() {
@@ -22,5 +23,11 @@ export default class extends Controller {
   calculatePrice(weight) {
     const priceTier = this.priceTiers.find(tier => parseFloat(tier.weight) === weight)
     return priceTier ? parseFloat(priceTier.price) : 0
+  }
+
+  checkFormValidity() {
+    const form = this.element.querySelector('form')
+    const isValid = form.checkValidity()
+    this.submitButtonTarget.disabled = !isValid
   }
 }
