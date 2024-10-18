@@ -34,11 +34,12 @@ streaky_bacon = Product.create!(
 # Create Price Tiers
 puts "Creating price tiers..."
 PriceTier.create!([
-  { product: streaky_bacon, price: 6.0, weight: 250 },
+  { product: streaky_bacon, price: 6.5, weight: 250 },
   { product: streaky_bacon, price: 12.0, weight: 500 },
-  { product: streaky_bacon, price: 20.0, weight: 1000 },
-  { product: back_bacon, price: 23.0, weight: 1000 },
-  { product: back_bacon, price: 7.5, weight: 250 }
+  { product: streaky_bacon, price: 21.0, weight: 1000 },
+  { product: back_bacon, price: 7.0, weight: 250 },
+  { product: back_bacon, price: 12.5, weight: 500 },
+  { product: back_bacon, price: 23.0, weight: 1000 }
 ])
 
 puts "Seed data created successfully!"
