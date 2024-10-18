@@ -19,14 +19,16 @@ back_bacon = Product.create!(
   name: "Back Bacon",
   category: "bacon",
   pricing_type: "by_weight",
-  image: "back.jpg"
+  image: "back.jpg",
+  description: "Cut from the pork loin, located in the back of the pig. It's a relatively lean cut with a wide, meaty section and a smaller fat-streaked portion."
 )
 
 streaky_bacon = Product.create!(
   name: "Streaky Bacon",
   category: "bacon",
   pricing_type: "by_weight",
-  image: "streaky.jpg"
+  image: "streaky.jpg",
+  description: "Cut from the pork belly, this cut features alternating layers of fat and meat running in narrow strips. The higher fat content allows it to become crispy when cooked."
 )
 
 # Create Price Tiers
