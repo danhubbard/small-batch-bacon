@@ -1,7 +1,7 @@
 <div class="sm:flex">
   <div class="sm:w-1/2 sm:h-screen">
     <%= image_tag "bacon.jpg", alt: "Bacon", class: "hidden sm:block w-full h-96 sm:h-full object-cover" %>
-    <%= image_tag "bacon-eggs.jpg", alt: "Bacon", class: "sm:hidden w-full h-56 sm:h-full object-cover" %>
+    <%= image_tag "bacon-eggs.jpg", alt: "Bacon", class: "sm:hidden w-full h-40 sm:h-full object-cover" %>
   </div>
   <div class="sm:w-1/2 text-yellow-50 mt-12 sm:mt-0">
     <div class="flex items-center justify-between h-full px-5 sm:pl-12 font-['Noto_Sans_SC']">
@@ -10,10 +10,10 @@
         <h1 class="text-4xl sm:text-7xl sm:w-2/3 mb-12">
           Small batch, hand-cured & smoked bacon
         </h1>
-        <p class="text-xl">🎄 Now accepting orders for Christmas 2024 delivery</p>
-        <p class="text-xl sm:text-2xl mt-12">
+        <p class="text-xl sm:text-2xl mb-12">
           <%= link_to "Shop now &rarr;".html_safe, products_path, class: 'px-5 py-2 rounded-lg text-slate-900 bg-yellow-50' %>
         </p>
+        <p class="text-xl">🎄 Now accepting orders for Christmas 2024 delivery</p>
       </div>
       <nav class="absolute top-5 sm:top-8 right-8 sm:right-24">
         <ul class="flex space-x-4">
